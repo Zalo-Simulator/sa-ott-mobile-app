@@ -38,6 +38,7 @@ final class PasswordResetViewController: UIViewController {
         tfPassword.attributedPlaceholder = createPlaceholderAttributedString("Enter your password")
         tfPassword.layer.cornerRadius = 10
         tfPassword.layer.masksToBounds = true
+        tfPassword.returnKeyType = .next
         tfPassword.translatesAutoresizingMaskIntoConstraints = false
         
         lblConfirmPassword = UILabel()
@@ -53,6 +54,7 @@ final class PasswordResetViewController: UIViewController {
         tfConfirmPassword.attributedPlaceholder = createPlaceholderAttributedString("Enter your password again")
         tfConfirmPassword.layer.cornerRadius = 10
         tfConfirmPassword.layer.masksToBounds = true
+        tfConfirmPassword.returnKeyType = .done
         tfConfirmPassword.translatesAutoresizingMaskIntoConstraints = false
         
         let confirmTitle = "Done"
@@ -105,6 +107,9 @@ final class PasswordResetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .nearWhite
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,6 +138,10 @@ final class PasswordResetViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 extension PasswordResetViewController: UITextFieldDelegate {
@@ -144,6 +153,11 @@ extension PasswordResetViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderColor = nil
         textField.layer.borderWidth = 0
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

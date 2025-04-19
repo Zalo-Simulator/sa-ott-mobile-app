@@ -69,6 +69,8 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         activeLabel.text = "Is active"
         activeLabel.font = .interMedium(16)
         
+        phoneField.isUserInteractionEnabled = false
+        statusField.isUserInteractionEnabled = false
         activeSwitch.isEnabled = false
 
         let activeStack = UIStackView(arrangedSubviews: [activeLabel, activeSwitch])

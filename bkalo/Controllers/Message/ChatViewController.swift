@@ -89,6 +89,11 @@ final class ChatViewController: MessagesViewController {
         )
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        socketManager?.destroySocket()
+    }
+    
     private func configureMessageInputBar() {
         messageInputBar.delegate = self
         messageInputBar.inputTextView.tintColor = UIColor(hexString: "#439BF0")
@@ -289,6 +294,12 @@ extension ChatViewController: MessagesDisplayDelegate {
             .font: UIFont.boldSystemFont(ofSize: 12),
             .foregroundColor: UIColor.gray
         ])
+    }
+    
+    func configureMediaMessageImageView(_ imageView: UIImageView, for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        if case let .photo(media) = message.kind, let imageURL = media.url {
+            imageView.kf.setImage(with: imageURL)
+        }
     }
 }
 

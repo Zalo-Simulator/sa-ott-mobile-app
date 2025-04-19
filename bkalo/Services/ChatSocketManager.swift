@@ -46,6 +46,10 @@ final class ChatSocketManager {
         NotificationCenter.default.addObserver(self, selector: #selector(disconnectSocket), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
+    func destroySocket() {
+        socket?.disconnect()
+    }
+    
     func handleError(_ error: Error?) {
         if let e = error as? WSError {
             print("websocket encountered an error: \(e.message)")
